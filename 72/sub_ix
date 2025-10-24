@@ -1,0 +1,27 @@
+impl IntX {
+    pub fn sub_ix(&self, other: &Self) -> Self {
+        assert!(self.cmp_abs(other) != Ordering::Less, "negative result not supported");
+
+        let mut out: Vec<u64> = Vec::with_capacity(self.data.len());
+
+        let mut borrow: i128 = 0;
+        let n = self.data.len();
+        for i in 0..n {
+            let a = self.data[i] as i128;
+            let b = *other.data.get(i).unwrap_or(&0) as i128;
+            let mut diff = a - b + borrow;
+            if diff < 0 {
+                diff += 1i128 << 64;
+                borrow = -1;
+            } else {
+                borrow = 0;
+            }
+            out.push(diff as u64);
+        }
+
+        let mut res = IntX { data: out };
+        res.normalize();
+        res
+    }
+}
+

@@ -1,0 +1,23 @@
+impl IntX {
+    pub fn add_ix(&self, other: &Self) -> Self {
+        let mut out: Vec<u64> = Vec::with_capacity(self.data.len().max(other.data.len()) + 1);
+
+        let mut carry: u128 = 0;
+        let n = self.data.len().max(other.data.len());
+        for i in 0..n {
+            let a = *self.data.get(i).unwrap_or(&0) as u128;
+            let b = *other.data.get(i).unwrap_or(&0) as u128;
+            let sum = a + b + carry;
+            out.push(sum as u64);
+            carry = sum >> 64;
+        }
+        if carry != 0 {
+            out.push(carry as u64);
+        }
+
+        let mut res = IntX { data: out };
+        res.normalize();
+        res
+    }
+}
+

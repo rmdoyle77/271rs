@@ -1,0 +1,17 @@
+impl IntX {
+    /// returns (quotient, remainder) such that self = quotient*div + remainder, 0 <= remainder < div
+    pub fn divmod_ix(&self, div: &Self) -> (Self, Self) {
+        unimplemented!()
+    }
+
+    pub fn div_ix(&self, div: &Self) -> Self {
+        let (q, _r) = self.divmod_ix(div);
+        q
+    }
+
+    pub fn rem_ix(&self, div: &Self) -> Self {
+        let (_q, r) = self.divmod_ix(div);
+        r
+    }
+}
+

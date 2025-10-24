@@ -1,0 +1,30 @@
+impl IntX {
+    pub fn mul_ix(&self, other: &Self) -> Self {
+        let n = self.data.len();
+        let m = other.data.len();
+        let mut out = vec![0u64; n + m];
+
+        for i in 0..n {
+            let a = self.data[i] as u128;
+            let mut carry: u128 = 0;
+            for j in 0..m {
+                let b = other.data[j] as u128;
+                let idx = i + j;
+
+                let cur = out[idx] as u128;
+                let prod = a * b + cur + carry;
+
+                out[idx] = prod as u64;
+                carry = prod >> 64;
+            }
+            if carry != 0 {
+                out[i + m] = (out[i + m] as u128 + carry) as u64;
+            }
+        }
+
+        let mut res = IntX { data: out };
+        res.normalize();
+        res
+    }
+}
+
