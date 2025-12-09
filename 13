@@ -1,0 +1,11 @@
+ I would never do this, but it can be fun.
+fn main() {
+    let mut x = 0;
+    `loop_city: loop {
+        println!("{x}");
+        x += 1
+        if x > 10 {
+            break `loop_city;
+        }
+    }
+}
